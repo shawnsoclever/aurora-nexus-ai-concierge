@@ -26,7 +26,7 @@ End-to-end flow:
 
 `User -> Frontend -> FastAPI Backend -> Google ADK Agents -> MCP Tools -> Google Sheets`
 
-![Aurora Nexus System Architecture](/architecture-diagram.png)
+![Aurora Nexus System Architecture](agentic_hotel_system_architecture.png)
 
 ### Layer Breakdown
 
