@@ -28,10 +28,6 @@ End-to-end flow:
 
 ![Aurora Nexus System Architecture](agentic_hotel_system_architecture.png)
 
-![Hotel Web Main Page](hotel_web_main_page.png)
-
-![Hotel Web support Page](hotel_web_support_page.png)
-
 ### Layer Breakdown
 
 - Frontend (`frontend/`): Web chat and support UI served directly by FastAPI.
@@ -294,10 +290,14 @@ Aurora Nexus provides a web-based interface served directly by FastAPI from the 
 	- Captures guest requests and displays assistant responses in a chat flow.
 	- Supports booking journey from intent capture to recommendation, preview, payment, and confirmation.
 
+![Hotel Web Main Page](hotel_web_main_page.png)
+
 - `/support` (Support and Complaint Page)
 	- Dedicated support interface for post-booking issues.
 	- Allows guests to submit complaints tied to booking context.
 	- Integrates with support/room-reassignment logic handled by backend tools.
+
+![Hotel Web support Page](hotel_web_support_page.png)
 
 ### Frontend Behavior
 
