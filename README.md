@@ -26,6 +26,8 @@ End-to-end flow:
 
 `User -> Frontend -> FastAPI Backend -> Google ADK Agents -> MCP Tools -> Google Sheets`
 
+![Aurora Nexus System Architecture](/architecture-diagram.png)
+
 ### Layer Breakdown
 
 - Frontend (`frontend/`): Web chat and support UI served directly by FastAPI.
