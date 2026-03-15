@@ -24,7 +24,7 @@ The system solves a common hospitality problem: fragmented manual workflows acro
 
 End-to-end flow:
 
-`User -> Frontend -> FastAPI Backend -> Google ADK Agents -> MCP Tools -> Google Sheets`
+`User -> Frontend -> FastAPI Backend -> Gaurdrail Layer Agent -> Google ADK Agents -> MCP Tools -> Google Sheets`
 
 ![Aurora Nexus System Architecture](agentic_hotel_system_architecture.png)
 
