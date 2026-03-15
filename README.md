@@ -2,6 +2,12 @@
 
 An agentic hotel concierge platform that automates booking, payment, support, and post-booking service workflows using FastAPI, Google ADK, MCP tools, and Google Sheets.
 
+## Project Name
+
+Aurora Nexus AI Concierge
+
+This project delivers a stage-aware hotel operations assistant that coordinates booking, payment, support, and post-booking services through a multi-agent orchestration architecture.
+
 ## Project Overview
 
 Aurora Nexus is a multi-agent hotel operations system that handles guest conversations end to end:
@@ -56,6 +62,25 @@ Aurora Nexus uses role-specialized agents with controlled responsibilities and t
 - Confirmation Agent: final booking confirmation formatting and completion response.
 
 This separation improves reliability, observability, and policy enforcement.
+
+## Agent Profiles (A2A Flow)
+
+The system applies an agent-to-agent (A2A) handoff pattern where the orchestrator delegates each step to a specialized agent and receives structured outcomes before moving to the next stage.
+
+### A2A Stage Flow
+
+1. Conversation Agent receives the user request and determines intent.
+2. Guest Profiling Agent extracts guest profile fields and missing information.
+3. Reservation Agent and Room Assignment Agent coordinate recommendation and room selection.
+4. Billing Agent validates payment context and records transaction.
+5. Confirmation Agent composes the final confirmed booking response.
+6. Upsell Agent and Support Agent handle post-booking service requests and complaints.
+
+### Handoff Principle
+
+- Each agent owns a narrow responsibility.
+- Tool access is policy constrained per role.
+- Stage transitions only occur when prerequisite stage outputs are valid.
 
 ## API Endpoints
 
@@ -161,6 +186,17 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 pytest -q
 ```
 
+## Setup Instruction (Quick Start)
+
+1. Clone repository and enter project root.
+2. Create and activate virtual environment.
+3. Install dependencies from `requirements.txt`.
+4. Configure `.env` from `.env.example`.
+5. Start MCP server (`python tools/mcp_server.py`).
+6. Start FastAPI server (`uvicorn main:app --host 0.0.0.0 --port 8000 --reload`).
+7. Open `/` for chat UI and run booking workflow.
+8. Run tests with `pytest -q`.
+
 ## Deployment Guide (Render)
 
 This project is best deployed as two Render services:
@@ -241,6 +277,47 @@ Typical user journey:
 7. Receive final booking confirmation.
 8. Request add-on services or submit complaints if needed.
 
+## Agentic Agency and Recovery
+
+Aurora Nexus is designed to recover gracefully from model, policy, and stage-flow failures while preserving session continuity.
+
+### Recovery Behaviors
+
+- Stage enforcement prevents invalid jumps (for example confirmation before payment).
+- Deterministic fallback responses are used for critical post-payment confirmations.
+- Service and complaint intents in confirmation stage can be handled without relying on fragile free-form model behavior.
+- New reservation intents after confirmation reset to recommendation stage safely.
+
+### Failure Handling
+
+- Validation errors return structured API error payloads with reason codes.
+- Guardrail blocks provide explicit decision metadata.
+- Runtime model errors are contained and surfaced as controlled backend responses.
+
+### Reasoning Traces and Observability
+
+- Correlation IDs are generated per workflow request.
+- Audit logs track stage actions and outcomes.
+- Guardrail decisions are logged for input, policy, tool, and output phases.
+
+## Technical Depth (ADK and MCP Implementation)
+
+This implementation demonstrates deep integration of Google ADK orchestration and MCP tool execution:
+
+- ADK multi-agent composition with a root orchestrator and specialist sub-agents.
+- MCP tool server exposing domain operations (booking, payment, room, services, support).
+- Tool calls guarded by policy and payload checks before execution.
+- Session-aware workflow state persisted and enforced at API layer.
+- FastAPI endpoints mapped directly to stage transition contracts.
+
+### Implementation Highlights
+
+- `agents/` defines role-specific ADK agents.
+- `orchestrator/runner.py` executes routed agent flows.
+- `tools/mcp_server.py` hosts MCP tools over HTTP transport.
+- `api/routes.py` enforces workflow transitions and deterministic fallbacks.
+- `core/session.py` tracks session stage, preview state, and confirmation context.
+
 ## Security and Guardrails
 
 The platform enforces multi-layer safety controls:
@@ -254,6 +331,26 @@ The platform enforces multi-layer safety controls:
 Guardrail pipeline:
 
 `Input Guard -> Policy Guard -> Tool Guard -> Output Guard`
+
+## System Robustness (Safety Guardrails and ADK Controls)
+
+The system robustness model combines ADK orchestration constraints with explicit guardrail and API-stage protections.
+
+### Methods Implemented
+
+- Input Safety Guard: checks user messages for unsafe content before agent execution.
+- Policy Guard: validates whether the selected agent/tool action is allowed for the current intent and stage.
+- Tool Guard: validates payload correctness and blocks unsafe tool operations.
+- Output Guard: sanitizes sensitive text patterns in outbound responses.
+- Stage Guardrails: API transition checks ensure order:
+	- recommendation -> preview -> booking -> payment -> confirmation
+	- cancellation routes return to safe prior stages
+
+### Robustness Outcome
+
+- Reduced risk of tool misuse and prompt injection.
+- Reduced stage-skipping and inconsistent booking state.
+- Improved reliability under model quota/runtime failures using deterministic fallbacks for critical paths.
 
 ## Future Improvements
 
