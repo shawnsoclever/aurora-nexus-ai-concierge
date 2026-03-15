@@ -283,6 +283,36 @@ Typical user journey:
 7. Receive final booking confirmation.
 8. Request add-on services or submit complaints if needed.
 
+## Webpage Explanation
+
+Aurora Nexus provides a web-based interface served directly by FastAPI from the `frontend/` directory.
+
+### Main Pages
+
+- `/` (Chat Concierge Page)
+	- Primary user interface for hotel booking conversation.
+	- Captures guest requests and displays assistant responses in a chat flow.
+	- Supports booking journey from intent capture to recommendation, preview, payment, and confirmation.
+
+- `/support` (Support and Complaint Page)
+	- Dedicated support interface for post-booking issues.
+	- Allows guests to submit complaints tied to booking context.
+	- Integrates with support/room-reassignment logic handled by backend tools.
+
+### Frontend Behavior
+
+- The webpage sends requests to FastAPI endpoints such as `/chat`, `/rooms`, `/booking/preview`, `/booking`, `/payment/preview`, `/payment`, and `/complaint`.
+- UI state follows backend stage transitions to keep the workflow consistent.
+- Booking confirmations and service responses are rendered directly in the chat interface.
+
+### UI Implementation Files
+
+- `frontend/index.html`: main concierge webpage structure.
+- `frontend/chat.js`: chat interactions, booking actions, and API calls.
+- `frontend/support.html`: support page structure.
+- `frontend/support.js`: complaint submission interactions.
+- `frontend/styles.css`: shared styling and responsive layout.
+
 ## Agentic Agency and Recovery
 
 Aurora Nexus is designed to recover gracefully from model, policy, and stage-flow failures while preserving session continuity.
