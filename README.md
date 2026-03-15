@@ -28,6 +28,10 @@ End-to-end flow:
 
 ![Aurora Nexus System Architecture](agentic_hotel_system_architecture.png)
 
+![Hotel Web Main Page](hotel_web_main_page.png)
+
+![Hotel Web support Page](hotel_web_support_page.png)
+
 ### Layer Breakdown
 
 - Frontend (`frontend/`): Web chat and support UI served directly by FastAPI.
