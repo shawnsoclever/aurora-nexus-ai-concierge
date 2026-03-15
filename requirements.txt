@@ -1,0 +1,39 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+python-dotenv
+
+# Google Sheets MCP integration
+gspread
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+
+# Google ADK runtime
+google-adk
+
+# MCP server/runtime
+fastmcp
+
+# HTTP & tool communication
+requests
+httpx
+
+# data handling
+pandas
+numpy
+
+# logging & observability
+loguru
+
+# async utilities
+asyncio
+tenacity
+
+# JSON handling
+orjson
+
+# testing
+pytest
+pytest-asyncio

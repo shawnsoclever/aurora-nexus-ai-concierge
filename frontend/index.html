@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aurora Nexus Hotel - AI Concierge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="/frontend/styles.css" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="brand-link" aria-label="Aurora Nexus Hotel Home">
+      <span class="brand-crest" aria-hidden="true">
+        <span>A</span>
+        <span>N</span>
+      </span>
+      <span class="brand-stack">
+        <span class="brand-name">Aurora Nexus</span>
+        <span class="brand-tagline">Luxury AI Concierge</span>
+      </span>
+    </a>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero-copy">
+      <h1>AI Concierge Assistant</h1>
+      <p>Book rooms, ask hotel questions, and get instant concierge support through natural conversation.</p>
+      <p id="sessionNotice" class="session-notice" aria-live="polite"></p>
+    </section>
+
+    <section class="chat-panel card-glass">
+      <div id="conciergeLoader" class="concierge-loader d-none" aria-live="polite">
+        <div class="spinner-ring small"></div>
+        <p id="conciergeLoaderText">AI Concierge is preparing your experience...</p>
+      </div>
+
+      <div id="messages" class="messages"></div>
+
+      <div id="bookingLoader" class="booking-loader d-none" aria-live="polite">
+        <div class="spinner-ring"></div>
+        <p>Searching for available rooms...</p>
+      </div>
+
+      <div id="roomResults" class="room-results d-none">
+        <h2>Available Rooms</h2>
+        <div id="roomCards" class="room-cards"></div>
+      </div>
+
+      <div id="bookingProgress" class="booking-progress d-none" aria-live="polite">
+        <h2>Booking Progress</h2>
+        <div class="progress-steps">
+          <div class="progress-step" data-step="preview">
+            <span class="step-name">Preview</span>
+            <span class="step-status status-pending">Pending</span>
+          </div>
+          <div class="progress-step" data-step="booking">
+            <span class="step-name">Booking</span>
+            <span class="step-status status-pending">Pending</span>
+          </div>
+          <div class="progress-step" data-step="payment_preview">
+            <span class="step-name">Payment Preview</span>
+            <span class="step-status status-pending">Pending</span>
+          </div>
+          <div class="progress-step" data-step="payment">
+            <span class="step-name">Payment</span>
+            <span class="step-status status-pending">Pending</span>
+          </div>
+          <div class="progress-step" data-step="confirmation">
+            <span class="step-name">Confirmation</span>
+            <span class="step-status status-pending">Pending</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="actionCards" class="action-cards d-none" aria-live="polite"></div>
+
+      <div class="composer">
+        <input id="messageInput" type="text" placeholder="Book a room, ask for services, or request support" autocomplete="off">
+        <button id="sendBtn" type="button">Send</button>
+      </div>
+    </section>
+  </main>
+
+  <a class="support-fab" href="/support" aria-label="Guest Support">
+    <span class="support-icon">🛟</span>
+    <span>Guest Support</span>
+  </a>
+
+  <script src="/frontend/chat.js"></script>
+</body>
+</html>

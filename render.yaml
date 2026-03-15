@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: aurora-nexus-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: GOOGLE_MODEL
+        value: gemini-2.0-flash
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GOOGLE_SHEETS_SPREADSHEET_ID
+        sync: false
+      - key: GOOGLE_SHEETS_CREDENTIALS_JSON_B64
+        sync: false
+      - key: MCP_SERVER_URL
+        sync: false
+
+  - type: web
+    name: aurora-nexus-mcp
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python tools/mcp_server.py
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: GOOGLE_MODEL
+        value: gemini-2.0-flash
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GOOGLE_SHEETS_SPREADSHEET_ID
+        sync: false
+      - key: GOOGLE_SHEETS_CREDENTIALS_JSON_B64
+        sync: false
+      - key: MCP_SERVER_URL
+        value: http://localhost:$PORT/mcp
